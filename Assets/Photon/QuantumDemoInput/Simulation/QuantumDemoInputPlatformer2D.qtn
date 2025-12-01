@@ -1,0 +1,14 @@
+[ExcludeFromPrototype]
+struct QuantumDemoInputPlatformer2D {
+    FPVector2 AimDirection;
+    button Left;
+    button Right;
+    button Up;
+    button Down;
+    button Jump;
+    button Dash;
+    button Fire;
+    button AltFire;
+    button Use;
+    button Hook;
+}

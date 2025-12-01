@@ -1,0 +1,40 @@
+﻿enum AbilityType { Block, Dash, Attack, ThrowShort, ThrowLong, Jump, Hook, Invisibility, Speedster, Banana, Bomb }
+
+enum AbilityAvailabilityType { Always, WithBall, WithoutBall }
+
+component AbilityInventory {
+    [ExcludeFromPrototype] ActiveAbilityInfo ActiveAbilityInfo;
+
+    array<Ability>[11] Abilities;
+
+    [ExcludeFromPrototype] bool Blocking;
+}
+
+
+struct ActiveAbilityInfo {
+    [ExcludeFromPrototype] int ActiveAbilityIndex;
+    [ExcludeFromPrototype] FPVector3 CastDirection;
+    [ExcludeFromPrototype] FPQuaternion CastRotation;
+    [ExcludeFromPrototype] FPVector3 CastVelocity;
+    [ExcludeFromPrototype] FP CastStrength;
+}
+
+
+struct Ability {
+    [ExcludeFromPrototype] AbilityType AbilityType;
+    [ExcludeFromPrototype] CountdownTimer InputBufferTimer;
+    [ExcludeFromPrototype] CountdownTimer DelayTimer;
+    [ExcludeFromPrototype] CountdownTimer DurationTimer;
+    [ExcludeFromPrototype] CountdownTimer CooldownTimer;
+    asset_ref<AbilityData> AbilityData;
+}
+
+signal OnCooldownsReset(entity_ref playerEntityRef);
+signal OnActiveAbilityStopped(entity_ref playerEntityRef);
+
+struct SelectedAbilities {
+    AbilityType Utility;
+    AbilityType Main1;
+    AbilityType Main2;
+    QBoolean IsSet;
+}

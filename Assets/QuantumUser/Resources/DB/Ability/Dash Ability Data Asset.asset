@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532765ba16e99d247852e123b6194fdb, type: 3}
+  m_Name: Dash Ability Data Asset
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/DB/Ability/Dash Ability Data Asset
+    Guid:
+      Value: 138034029450809605
+  InputBuffer:
+    RawValue: 9830
+  Delay:
+    RawValue: 9830
+  Duration:
+    RawValue: 32768
+  Cooldown:
+    RawValue: 917504
+  AvailabilityType: 0
+  CastDirectionType: -1
+  FaceCastDirection: 1
+  KeepVelocity: 1
+  StartCooldownAfterDelay: 0
+  _uiAbilityPrefab: {fileID: 4353528997759187300, guid: 4fe25e742e2d7bc4e821ea4f1850b9c1,
+    type: 3}
+  AllowConcurrent: 0
+  MenuShortDescription: Quickly dash forward
+  MenuEffects: No effects
+  DashDistance:
+    RawValue: 1966080
+  DashMovementCurve:
+    Samples:
+    - RawValue: 0
+    - RawValue: 1118421
+    - RawValue: 2236842
+    - RawValue: 3355262
+    - RawValue: 4473684
+    - RawValue: 5592104
+    - RawValue: 6710525
+    - RawValue: 7828946
+    - RawValue: 8947368
+    - RawValue: 10065788
+    - RawValue: 11184209
+    - RawValue: 12302630
+    - RawValue: 13421051
+    - RawValue: 14539472
+    - RawValue: 15657893
+    - RawValue: 16776314
+    - RawValue: 17894736
+    - RawValue: 19013156
+    - RawValue: 20131576
+    - RawValue: 21249998
+    - RawValue: 22368418
+    - RawValue: 23486840
+    - RawValue: 24605260
+    - RawValue: 25723682
+    - RawValue: 26842102
+    - RawValue: 27960524
+    - RawValue: 29078944
+    - RawValue: 30197366
+    - RawValue: 31315786
+    - RawValue: 32434208
+    - RawValue: 33552628
+    - RawValue: 34671048
+    - RawValue: 35789472
+    - RawValue: 36907892
+    - RawValue: 38026312
+    PreWrapMode: 0
+    PostWrapMode: 0
+    StartTime:
+      RawValue: 0
+    EndTime:
+      RawValue: 36142
+    Resolution: 34
+    OriginalPreWrapMode: 8
+    OriginalPostWrapMode: 8
+    Keys:
+    - Time:
+        RawValue: 0
+      Value:
+        RawValue: 0
+      InTangent:
+        RawValue: 68952808
+      OutTangent:
+        RawValue: 68952808
+      TangentMode: 0
+      TangentModeLeft: 1
+      TangentModeRight: 1
+      WeightedMode: 0
+    - Time:
+        RawValue: 36142
+      Value:
+        RawValue: 38026312
+      InTangent:
+        RawValue: 68952808
+      OutTangent:
+        RawValue: 68952808
+      TangentMode: 0
+      TangentModeLeft: 1
+      TangentModeRight: 1
+      WeightedMode: 0

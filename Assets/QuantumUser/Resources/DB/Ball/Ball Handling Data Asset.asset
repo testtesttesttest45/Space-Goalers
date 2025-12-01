@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6207a46bc33e3334291b9115bcec9fb9, type: 3}
+  m_Name: Ball Handling Data Asset
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/DB/Ball/Ball Handling Data Asset
+    Guid:
+      Value: 3224189922728770339
+  CatchRadius:
+    RawValue: 85197
+  CatchTimeout:
+    RawValue: 6553
+  RespawnImpulse:
+    X:
+      RawValue: 0
+    Y:
+      RawValue: 655360
+    Z:
+      RawValue: 0
+  DropLocalPosition:
+    X:
+      RawValue: 0
+    Y:
+      RawValue: 32768
+    Z:
+      RawValue: 0
+  DropMinImpulse:
+    X:
+      RawValue: -65536
+    Y:
+      RawValue: 1310720
+    Z:
+      RawValue: -65536
+  DropMaxImpulse:
+    X:
+      RawValue: 65536
+    Y:
+      RawValue: 1441792
+    Z:
+      RawValue: 65536
+  DropImpulseOffsetY:
+    RawValue: 65536
+  ThrowGravityChangeCurve:
+    Samples:
+    - RawValue: 0
+    - RawValue: 4032
+    - RawValue: 7936
+    - RawValue: 11712
+    - RawValue: 15360
+    - RawValue: 18880
+    - RawValue: 22272
+    - RawValue: 25536
+    - RawValue: 28672
+    - RawValue: 31680
+    - RawValue: 34560
+    - RawValue: 37312
+    - RawValue: 39936
+    - RawValue: 42432
+    - RawValue: 44800
+    - RawValue: 47040
+    - RawValue: 49152
+    - RawValue: 51136
+    - RawValue: 52992
+    - RawValue: 54720
+    - RawValue: 56320
+    - RawValue: 57792
+    - RawValue: 59136
+    - RawValue: 60352
+    - RawValue: 61440
+    - RawValue: 62400
+    - RawValue: 63232
+    - RawValue: 63936
+    - RawValue: 64512
+    - RawValue: 64960
+    - RawValue: 65280
+    - RawValue: 65472
+    - RawValue: 65536
+    PreWrapMode: 0
+    PostWrapMode: 0
+    StartTime:
+      RawValue: 0
+    EndTime:
+      RawValue: 65536
+    Resolution: 32
+    OriginalPreWrapMode: 8
+    OriginalPostWrapMode: 8
+    Keys:
+    - Time:
+        RawValue: 0
+      Value:
+        RawValue: 0
+      InTangent:
+        RawValue: 131072
+      OutTangent:
+        RawValue: 131072
+      TangentMode: 0
+      TangentModeLeft: 0
+      TangentModeRight: 0
+      WeightedMode: 0
+    - Time:
+        RawValue: 65536
+      Value:
+        RawValue: 65536
+      InTangent:
+        RawValue: 0
+      OutTangent:
+        RawValue: 0
+      TangentMode: 0
+      TangentModeLeft: 0
+      TangentModeRight: 0
+      WeightedMode: 0
+  LateralBounceFriction:
+    RawValue: 39321
+  LateralGroundFriction:
+    RawValue: 62259

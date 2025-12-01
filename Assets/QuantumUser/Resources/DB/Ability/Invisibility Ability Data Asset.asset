@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db94a6aace169a4480a96bde0917f45, type: 3}
+  m_Name: Invisibility Ability Data Asset
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/DB/Ability/Invisibility Ability Data Asset
+    Guid:
+      Value: 314779176717323964
+  InputBuffer:
+    RawValue: 9831
+  Delay:
+    RawValue: 9831
+  Duration:
+    RawValue: 327680
+  Cooldown:
+    RawValue: 720896
+  AvailabilityType: 0
+  CastDirectionType: -1
+  FaceCastDirection: 1
+  KeepVelocity: 1
+  StartCooldownAfterDelay: 0
+  _uiAbilityPrefab: {fileID: 4353528997759187300, guid: 3afd34b286b15b440a0742f30f1d3227,
+    type: 3}
+  AllowConcurrent: 1
+  MenuShortDescription: Becomes invisible briefly. If holding ball, opponents can
+    still see you
+  MenuEffects: Stealth

@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1a194f42d6f5a4bbb6f5cb37dc856b, type: 3}
+  m_Name: Punch Ability Data Asset
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/DB/Ability/Punch Ability Data Asset
+    Guid:
+      Value: 3925726492380045434
+  InputBuffer:
+    RawValue: 9830
+  Delay:
+    RawValue: 32768
+  Duration:
+    RawValue: 16384
+  Cooldown:
+    RawValue: 262144
+  AvailabilityType: 2
+  CastDirectionType: -1
+  FaceCastDirection: 1
+  KeepVelocity: 0
+  StartCooldownAfterDelay: 0
+  _uiAbilityPrefab: {fileID: 4353528997759187300, guid: 8fef660ff0c9ee44cbf63afbea3e936d,
+    type: 3}
+  AllowConcurrent: 0
+  MenuShortDescription: Punch opponents in front of you away
+  MenuEffects: Stun & Knockback
+  AttackShape:
+    ShapeType: 1
+    SphereRadius:
+      RawValue: 131072
+    CapsuleRadius:
+      RawValue: 32768
+    CapsuleHeight:
+      RawValue: 131072
+    PositionOffset:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 32768
+      Z:
+        RawValue: 0
+    BoxExtents:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+      Z:
+        RawValue: 0
+    RotationOffset:
+      X:
+        RawValue: 0
+      Y:
+        RawValue: 0
+      Z:
+        RawValue: 0
+    UserTag: 0
+    IsPersistent: 1
+    CompoundShapes:
+    - ShapeType: 1
+      SphereRadius:
+        RawValue: 114688
+      CapsuleRadius:
+        RawValue: 0
+      CapsuleHeight:
+        RawValue: 0
+      PositionOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 32768
+        Z:
+          RawValue: 114688
+      BoxExtents:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      RotationOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      UserTag: 0
+      IsSetFromSourceCollider: 0
+    - ShapeType: 1
+      SphereRadius:
+        RawValue: 147456
+      CapsuleRadius:
+        RawValue: 0
+      CapsuleHeight:
+        RawValue: 0
+      PositionOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 32768
+        Z:
+          RawValue: 196608
+      BoxExtents:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      RotationOffset:
+        X:
+          RawValue: 0
+        Y:
+          RawValue: 0
+        Z:
+          RawValue: 0
+      UserTag: 0
+      IsSetFromSourceCollider: 0
+  HitStatusEffects:
+  - Type: 1
+    Duration:
+      RawValue: 32768
+  - Type: 0
+    Duration:
+      RawValue: 131072

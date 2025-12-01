@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e31f72e4c99a364189783be71ef7a2e, type: 3}
+  m_Name: QuantumEditorSettings
+  m_EditorClassIdentifier: 
+  AssetSearchPaths:
+  - Assets/Resources/DB
+  - Assets/QuantumUser/Resources
+  - Assets/Photon/Quantum/Samples/SampleScenes/Resources
+  DefaultNewAssetsLocation: Assets/QuantumUser/Resources
+  UseQuantumUnityDBAssetPostprocessor: 1
+  UseQuantumToolbarUtilities: 1
+  QuantumToolbarZone: 0
+  UsePhotonAppVersionsPostprocessor: 1
+  EntityComponentInspectorMode: 2
+  AutoBuildOnSceneSave: 240
+  AutoBuildOnPlaymodeChanged: 240
+  AutoBuildOnBuild: -1
+  AssetGuidOverrides:
+  - Asset: {fileID: 4052795378133349437, guid: 0e789ea78bc3d374881aa85961b16cd0, type: 3}
+    Guid:
+      Value: 3065206620955996032
+  - Asset: {fileID: 1596252190420383739, guid: 0e789ea78bc3d374881aa85961b16cd0, type: 3}
+    Guid:
+      Value: 4435165380863494641
+  - Asset: {fileID: -860629503767056898, guid: 9257adbc674b2bc4ab5ad15bf2f13c25, type: 3}
+    Guid:
+      Value: 3598652125709230589
+  - Asset: {fileID: 11400000, guid: 98fccc81f0f5f5541a88d6da1896016c, type: 2}
+    Guid:
+      Value: 1
+  - Asset: {fileID: 11400000, guid: 9a687b7edaa60a2449f56faa9a433cd2, type: 2}
+    Guid:
+      Value: 2069728342310029143
+  - Asset: {fileID: 11400000, guid: a81a1ac948336cd41a2330975b9e8d27, type: 2}
+    Guid:
+      Value: 783529067424926960
+  - Asset: {fileID: 11400000, guid: 6dc2bd0f5fd9fce41b466e458348f108, type: 2}
+    Guid:
+      Value: 2419396348864428921
+  - Asset: {fileID: 11400000, guid: f452cd2e0d037de45af16957fe300365, type: 2}
+    Guid:
+      Value: 544980033606514141
+  - Asset: {fileID: 11400000, guid: b199eb2129ec98e408b3fa8a106d9403, type: 2}
+    Guid:
+      Value: 2
+  - Asset: {fileID: 11400000, guid: 3150e5a85e560df459c191389d76c0d8, type: 2}
+    Guid:
+      Value: 4106520956033676229
+  - Asset: {fileID: 11400000, guid: ca816cfd572fede42beaf6d4d714d81a, type: 2}
+    Guid:
+      Value: 3224189922728770339
+  - Asset: {fileID: 11400000, guid: dc679add70e5e34418f8b1167a1d80bf, type: 2}
+    Guid:
+      Value: 1928370932944749966
+  - Asset: {fileID: 11400000, guid: 567010b02b24a4e49a7d92cb5a4fb19a, type: 2}
+    Guid:
+      Value: 4524024696211039455
+  - Asset: {fileID: 11400000, guid: 6986abea4748d7d4099d49d11e593ce8, type: 2}
+    Guid:
+      Value: 5
+  - Asset: {fileID: 11400000, guid: 2ea2a06c76cc35d49be8a25324e787d4, type: 2}
+    Guid:
+      Value: 4
+  - Asset: {fileID: 11400000, guid: 51addebcc137df54c9769d7c767b0d75, type: 2}
+    Guid:
+      Value: 614665654056911442
+  - Asset: {fileID: 11400000, guid: 3a396fd0c7457514bb2e0973665393dc, type: 2}
+    Guid:
+      Value: 3925726492380045434
+  - Asset: {fileID: 11400000, guid: 65ed570833eea5941b79ee6244488dfd, type: 2}
+    Guid:
+      Value: 3591299047940734707
+  - Asset: {fileID: 11400000, guid: 778f0f86b1966af41b76a56b25e8ddf6, type: 2}
+    Guid:
+      Value: 138034029450809605
+  - Asset: {fileID: 11400000, guid: 53ec358565aeb974ea81a8e4f4c308c6, type: 2}
+    Guid:
+      Value: 2699719989916198559
+  - Asset: {fileID: 11400000, guid: 660462a50e86ae547a12d9400c14beef, type: 2}
+    Guid:
+      Value: 479812197791408123
+  - Asset: {fileID: 11400000, guid: 9e3593e8f91fb094ca2428fdd4cebd90, type: 2}
+    Guid:
+      Value: 1710471675203725834
+  - Asset: {fileID: 11400000, guid: 6e939e96f7d70e7409249d368e7cf863, type: 2}
+    Guid:
+      Value: 3
+  - Asset: {fileID: 11400000, guid: 9ef571dc69143d2439b04a8269ebfca3, type: 2}
+    Guid:
+      Value: 3581147170621229282
+  - Asset: {fileID: 11400000, guid: 48d8ed970b4a82b4dab9b7b1a6bb99af, type: 2}
+    Guid:
+      Value: 2671937484113028399
+  - Asset: {fileID: 3097001405596171208, guid: 8d5bef3c70125c94db68eb3f79826c2d, type: 3}
+    Guid:
+      Value: 1272690999646975465
+  - Asset: {fileID: 11400000, guid: 2df1d5f3a96a2364cac8561cfc8eb39c, type: 2}
+    Guid:
+      Value: 322065398265175587
+  - Asset: {fileID: 11400000, guid: 190f5b0e8302a1b499256624eb2d2eec, type: 2}
+    Guid:
+      Value: 517873678682530598
+  - Asset: {fileID: 11400000, guid: af6a0d9780804b844a0d77f061ba6e99, type: 2}
+    Guid:
+      Value: 390777451553668744
+  - Asset: {fileID: 11400000, guid: af600ef30dbf0c349a78ecd3195bb327, type: 2}
+    Guid:
+      Value: 321531312529630566
+  - Asset: {fileID: 11400000, guid: 96c5ac1222bb7ca4aabaaeff1decb3cb, type: 2}
+    Guid:
+      Value: 314779176717323964
+  - Asset: {fileID: 11400000, guid: e2e15ab19509d264a82aa0c5aa53bb4e, type: 2}
+    Guid:
+      Value: 292421194471043295

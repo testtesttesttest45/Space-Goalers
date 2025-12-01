@@ -1,0 +1,172 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd725977ca48db3458374ae8d5c75093, type: 3}
+  m_Name: Knockback Status Effect Data Asset
+  m_EditorClassIdentifier: 
+  Identifier:
+    Path: QuantumUser/Resources/DB/Status Effect/Knockback Status Effect Data Asset
+    Guid:
+      Value: 479812197791408123
+  KnockbackDistanceXZ:
+    RawValue: 393216
+  KnockbackDistanceY:
+    RawValue: 65536
+  KnockbackCurveXZ:
+    Samples:
+    - RawValue: 0
+    - RawValue: 2110
+    - RawValue: 4336
+    - RawValue: 6666
+    - RawValue: 9088
+    - RawValue: 11590
+    - RawValue: 14160
+    - RawValue: 16786
+    - RawValue: 19456
+    - RawValue: 22158
+    - RawValue: 24880
+    - RawValue: 27610
+    - RawValue: 30336
+    - RawValue: 33046
+    - RawValue: 35728
+    - RawValue: 38370
+    - RawValue: 40960
+    - RawValue: 43486
+    - RawValue: 45936
+    - RawValue: 48298
+    - RawValue: 50560
+    - RawValue: 52710
+    - RawValue: 54736
+    - RawValue: 56626
+    - RawValue: 58368
+    - RawValue: 59950
+    - RawValue: 61360
+    - RawValue: 62586
+    - RawValue: 63616
+    - RawValue: 64438
+    - RawValue: 65040
+    - RawValue: 65410
+    - RawValue: 65536
+    PreWrapMode: 0
+    PostWrapMode: 0
+    StartTime:
+      RawValue: 0
+    EndTime:
+      RawValue: 65536
+    Resolution: 32
+    OriginalPreWrapMode: 8
+    OriginalPostWrapMode: 8
+    Keys:
+    - Time:
+        RawValue: 0
+      Value:
+        RawValue: 0
+      InTangent:
+        RawValue: 65536
+      OutTangent:
+        RawValue: 65536
+      TangentMode: 0
+      TangentModeLeft: 1
+      TangentModeRight: 1
+      WeightedMode: 0
+    - Time:
+        RawValue: 65536
+      Value:
+        RawValue: 65536
+      InTangent:
+        RawValue: 0
+      OutTangent:
+        RawValue: 0
+      TangentMode: 0
+      TangentModeLeft: 4
+      TangentModeRight: 4
+      WeightedMode: 0
+  KnockbackCurveY:
+    Samples:
+    - RawValue: 0
+    - RawValue: 4336
+    - RawValue: 9088
+    - RawValue: 14160
+    - RawValue: 19456
+    - RawValue: 24880
+    - RawValue: 30336
+    - RawValue: 35728
+    - RawValue: 40960
+    - RawValue: 45936
+    - RawValue: 50560
+    - RawValue: 54736
+    - RawValue: 58368
+    - RawValue: 61360
+    - RawValue: 63616
+    - RawValue: 65040
+    - RawValue: 65536
+    - RawValue: 64048
+    - RawValue: 59776
+    - RawValue: 53008
+    - RawValue: 44032
+    - RawValue: 33136
+    - RawValue: 20608
+    - RawValue: 6736
+    - RawValue: -8192
+    - RawValue: -23888
+    - RawValue: -40064
+    - RawValue: -56432
+    - RawValue: -72704
+    - RawValue: -88592
+    - RawValue: -103808
+    - RawValue: -118064
+    - RawValue: -131072
+    PreWrapMode: 0
+    PostWrapMode: 0
+    StartTime:
+      RawValue: 0
+    EndTime:
+      RawValue: 65536
+    Resolution: 32
+    OriginalPreWrapMode: 8
+    OriginalPostWrapMode: 8
+    Keys:
+    - Time:
+        RawValue: 0
+      Value:
+        RawValue: 0
+      InTangent:
+        RawValue: 131072
+      OutTangent:
+        RawValue: 131072
+      TangentMode: 0
+      TangentModeLeft: 1
+      TangentModeRight: 1
+      WeightedMode: 0
+    - Time:
+        RawValue: 32768
+      Value:
+        RawValue: 65536
+      InTangent:
+        RawValue: 0
+      OutTangent:
+        RawValue: 0
+      TangentMode: 0
+      TangentModeLeft: 4
+      TangentModeRight: 4
+      WeightedMode: 0
+    - Time:
+        RawValue: 65536
+      Value:
+        RawValue: -131072
+      InTangent:
+        RawValue: -393216
+      OutTangent:
+        RawValue: -393216
+      TangentMode: 0
+      TangentModeLeft: 1
+      TangentModeRight: 1
+      WeightedMode: 0

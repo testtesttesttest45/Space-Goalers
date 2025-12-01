@@ -1,0 +1,91 @@
+﻿component StaticColliderLink
+{
+    Int32 StaticColliderIndex;
+}
+
+component TeamBaseWallStaticColliderTag { }
+
+enum GameState
+{
+    None, Initializing, Starting, Running, GoalScored, GameOver
+}
+
+global
+{
+    GameState GameState;
+    CountdownTimer GameStateTimer;
+    CountdownTimer MainGameTimer;
+	array<int>[2] TeamScore;
+}
+
+struct CountdownTimer
+{
+    FP TimeLeft;
+    FP StartTime;
+}
+
+signal OnGoalScored(entity_ref playerEntityRef, PlayerTeam playerTeam);
+
+synced event OnGameInitializing { }
+synced event OnGameStarting { bool IsFirst; }
+synced event OnGameRunning { }
+synced event OnGoalScored { entity_ref PlayerEntityRef; PlayerTeam PlayerTeam; }
+synced event OnGameOver { }
+synced event OnGameRestarted { }
+
+
+
+component BananaTrapOwner
+{
+    bool        Active;
+    FPVector3   Pos;
+    CountdownTimer Despawn;
+    FP          TriggerRadius;
+
+    FP          FallVelocity;
+    bool        Armed;
+
+    CountdownTimer ArmDelay;
+}
+
+
+
+component SlowedStatusEffect
+{
+    bool           IsActive;
+    CountdownTimer Duration;
+}
+
+
+component BombState
+{
+  entity_ref   Owner;
+  PlayerTeam   OwnerTeam;
+
+  array<FPVector3>[32] Path;
+  Int32                 PathCount;
+  FP                    PathTotalLen;
+  FP                    PathDist;
+  FP                    PathSpeed;
+  bool                  Finished;
+
+  FP   HandoffDistance;
+  FP   DownwardBias;
+
+  FP ExplosionRadius;
+  FP LifeTimeLeft;
+  FP GroundFuseLeft;
+  FP ContactTriggerRadius;
+  bool GroundFuseArmed;
+  bool Exploded;
+}
+
+component BallTrajectoryState
+{
+  array<FPVector3>[32] Path;
+  Int32                PathCount;
+  FP                   PathTotalLen;
+  FP                   PathDist;
+  FP                   PathSpeed;
+  bool                 Finished;
+}

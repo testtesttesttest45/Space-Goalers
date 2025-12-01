@@ -1,0 +1,29 @@
+﻿enum StatusEffectType
+{
+    Stun, Knockback
+}
+
+struct StatusEffect
+{
+    [ExcludeFromPrototype] CountdownTimer DurationTimer;
+}
+
+struct KnockbackStatusEffect : StatusEffect
+{
+    [ExcludeFromPrototype] FPVector3 KnockbackDirection;
+    [ExcludeFromPrototype] FPVector3 KnockbackVelocity;
+    
+    asset_ref<KnockbackStatusEffectData> StatusEffectData;
+}
+
+[Serializable]
+struct StatusEffectConfig
+{
+    StatusEffectType Type;
+    FP Duration;
+}
+
+signal OnStunApplied(entity_ref playerEntityRef, FP duration);
+signal OnKnockbackApplied(entity_ref playerEntityRef, FP duration, FPVector3 direction);
+
+signal OnStatusEffectsReset(entity_ref playerEntityRef);

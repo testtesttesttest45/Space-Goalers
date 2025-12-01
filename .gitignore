@@ -1,0 +1,65 @@
+# ==========================
+# Unity Generated
+# ==========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+MemoryCaptures/
+Recordings/
+sysinfo.txt
+mono_crash.*
+
+# ==========================
+# IDE / Editor Junk
+# ==========================
+.vs/
+.idea/
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.DotSettings.user
+
+# ==========================
+# Build Artifacts
+# ==========================
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.zip
+*.tar.gz
+
+# ==========================
+# Addressables / Cache
+# ==========================
+/ServerData/
+/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/AddressableAssetsData/link.xml*
+/[Aa]ssets/Addressables_Temp*/
+/[Aa]ssets/AddressableAssetsData/*/*.bin
+
+# ==========================
+# Visual Scripting
+# ==========================
+/[Aa]ssets/Unity.VisualScripting.Generated/
+
+# ==========================
+# UMotion plugin cache
+# ==========================
+/UMotionData/Temp/
+
+# ==========================
+# OS junk
+# ==========================
+.DS_Store
+Thumbs.db

@@ -1,0 +1,75 @@
+﻿enum PlayerTeam
+{
+    Blue, Red
+}
+
+component PlayerStatus
+{
+    [ExcludeFromPrototype] player_ref PlayerRef;
+    [ExcludeFromPrototype] entity_ref SpawnerEntityRef;
+    [ExcludeFromPrototype] PlayerTeam PlayerTeam;
+
+    [ExcludeFromPrototype] bool HasAirJump;
+    [ExcludeFromPrototype] CountdownTimer JumpCoyoteTimer;
+    [ExcludeFromPrototype] CountdownTimer RespawnTimer;
+    [ExcludeFromPrototype] entity_ref HoldingBallEntityRef;
+
+    asset_ref<PlayerMovementData> PlayerMovementData;
+
+    [Space]
+    StatusEffect StunStatusEffect;
+    KnockbackStatusEffect KnockbackStatusEffect;
+
+    FPVector2 DropzoneDir01;
+    bool DropzoneHas;
+
+    [ExcludeFromPrototype] CountdownTimer ExternalSpeedster;
+    [ExcludeFromPrototype] bool           ExternalSpeedsterActive;
+}
+
+component PlayerSpawner
+{
+    player_ref PlayerRef;
+    PlayerTeam PlayerTeam;
+}
+
+signal OnPlayerRespawned(entity_ref playerEntityRef, bool fullReset);
+signal OnPlayerRespawnTimerReset(entity_ref playerEntityRef);
+
+event OnPlayerJumped { entity_ref PlayerEntityRef; }
+event OnPlayerAirJumped { entity_ref PlayerEntityRef; }
+event OnPlayerLanded { entity_ref PlayerEntityRef; }
+
+event OnPlayerDashed { entity_ref PlayerEntityRef; }
+
+event OnPlayerAttacked { entity_ref PlayerEntityRef; }
+event OnPlayerBlocked { entity_ref PlayerEntityRef; }
+
+event OnPlayerStunned { entity_ref PlayerEntityRef; }
+
+event OnPlayerHit { entity_ref PlayerEntityRef; }
+event OnPlayerBlockHit { entity_ref PlayerEntityRef; FPVector3 HitLateralDirection; }
+
+event OnPlayerCaughtBall { entity_ref PlayerEntityRef; entity_ref BallEntityRef; }
+event OnPlayerThrewBall { entity_ref PlayerEntityRef; bool IsLongThrow; }
+
+event OnPlayerEnteredVoid { entity_ref PlayerEntityRef; }
+
+event OnInvisibilityActivated { entity_ref PlayerEntityRef; }
+event OnInvisibilityEnded { entity_ref PlayerEntityRef; }
+
+event OnSpeedsterActivated { entity_ref PlayerEntityRef; }
+event OnSpeedsterEnded { entity_ref PlayerEntityRef; }
+event OnPlayerHookshot { entity_ref PlayerEntityRef; }
+event OnPlayerHookHit {
+        entity_ref Attacker;
+        entity_ref Victim;
+    }
+
+synced event OnBananaConsumed { 
+    entity_ref PlayerEntityRef; 
+    bool IsAlly; // true = got a boost, false = got slowed
+}
+event OnBananaActivated { entity_ref PlayerEntityRef; }
+
+event OnBombCast { entity_ref PlayerEntityRef; }

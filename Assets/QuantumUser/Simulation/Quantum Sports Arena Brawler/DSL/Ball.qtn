@@ -1,0 +1,28 @@
+﻿component BallStatus
+{
+	[ExcludeFromPrototype] entity_ref HoldingPlayerEntityRef;
+	
+	[ExcludeFromPrototype] CountdownTimer GravityChangeTimer;
+
+	[ExcludeFromPrototype] CountdownTimer CatchTimeoutTimer;
+	[ExcludeFromPrototype] player_ref CatchTimeoutPlayerRef;
+	
+	[ExcludeFromPrototype] bool HasCollisionEnter;
+	[ExcludeFromPrototype] bool HasCollision;
+	
+    asset_ref<BallHandlingData> BallHandlingData;
+}
+
+component BallSpawner
+{
+}
+
+signal OnBallSpawned();
+signal OnBallRespawned(entity_ref ballEntityRef);
+signal OnBallDespawned(entity_ref ballEntityRef);
+
+signal OnBallReleased(entity_ref ballEntityRef);
+signal OnBallDropped(entity_ref ballEntityRef);
+signal OnBallPhysicsReset(entity_ref ballEntityRef);
+
+event OnBallBounced { entity_ref BallEntityRef; }

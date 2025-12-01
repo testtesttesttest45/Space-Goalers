@@ -1,0 +1,17 @@
+{
+    "name": "QuantumDemoInput",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f6fa0c2f8b9a9f64897d3351666f3d66",
+        "GUID:5d82202959c2f144ea95e134645b6833"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

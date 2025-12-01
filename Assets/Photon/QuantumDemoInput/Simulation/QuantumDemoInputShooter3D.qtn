@@ -1,0 +1,12 @@
+[ExcludeFromPrototype]
+struct QuantumDemoInputShooter3D {
+    FPVector2 MoveDirection;
+    FP Pitch;
+    FP Yaw;
+    button Jump;
+    button Dash;
+    button Fire;
+    button AltFire;
+    button Use;
+    button Hook;
+}

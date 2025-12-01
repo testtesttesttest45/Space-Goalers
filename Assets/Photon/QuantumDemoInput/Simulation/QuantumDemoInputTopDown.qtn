@@ -1,0 +1,22 @@
+﻿struct QuantumDemoInputTopDown {
+    FPVector2 MoveDirection;
+    FPVector2 AimDirection;
+
+    // 👇 ADD THESE TWO LINES
+    FPVector2 DropzoneDir01;  // camera→world, magnitude ∈ [0..1]
+    bool DropzoneHas;         // true if joystick released after aiming a drop
+
+    button Left;
+    button Right;
+    button Up;
+    button Down;
+    button Jump;
+    button Dash;
+    button Fire;
+    button AltFire;
+    button Use;
+    button Hook;
+    button Speed;
+    button Select;
+    button Bomb;
+}
