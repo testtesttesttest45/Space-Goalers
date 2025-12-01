@@ -2,45 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 #if QUANTUM_ENABLE_TEXTMESHPRO
     using InputField = TMPro.TMP_InputField;
 #else
-  using InputField = UnityEngine.UI.InputField;
+    using InputField = UnityEngine.UI.InputField;
 #endif
     using UnityEngine;
     using UnityEngine.UI;
     using Photon.Client;
-    using System.Linq;
     using static Quantum.Menu.QuantumMenuConnectionBehaviourSDK;
 
     /// <summary>
-    /// The party screen shows two modes. Creating a new game or joining a game with a party code.
-    /// After creating a game the session party code can be obtained via the in-game menu.
-    /// One specialty is that a region list is requested from the connection when entering the screen in order to create a matching session codes.
+    /// Party screen: create or join by session code.
+    /// On create we now force the ASIA region by normalizing the fetched region list (asia at index 0),
+    /// then encoding regionIndex=0 in the session code. On join we normalize first, then decode.
     /// </summary>
     public partial class QuantumMenuUIParty : QuantumMenuUIScreen
     {
-        /// <summary>
-        /// The session code input field.
-        /// </summary>
         [InlineHelp, SerializeField] protected InputField _sessionCodeField;
-        /// <summary>
-        /// The create game button.
-        /// </summary>
         [InlineHelp, SerializeField] protected Button _createButton;
-        /// <summary>
-        /// The join game button.
-        /// </summary>
         [InlineHelp, SerializeField] protected Button _joinButton;
-        /// <summary>
-        /// The back button.
-        /// </summary>
         [InlineHelp, SerializeField] protected Button _backButton;
 
-        /// <summary>
-        /// The task of requesting the regions.
-        /// </summary>
         protected Task<List<QuantumMenuOnlineRegion>> _regionRequest;
 
         partial void AwakeUser();
@@ -48,28 +33,18 @@
         partial void ShowUser();
         partial void HideUser();
 
-        /// <summary>
-        /// The Unity awake method. Calls partial method <see cref="AwakeUser"/> to be implemented on the SDK side.
-        /// </summary>
         public override void Awake()
         {
             base.Awake();
             AwakeUser();
         }
 
-        /// <summary>
-        /// The screen init method. Calls partial method <see cref="InitUser"/> to be implemented on the SDK side.
-        /// </summary>
         public override void Init()
         {
             base.Init();
             InitUser();
         }
 
-        /// <summary>
-        /// The screen show method. Calls partial method <see cref="ShowUser"/> to be implemented on the SDK side.
-        /// When entering this screen an async request to retrieve the available regions is started.
-        /// </summary>
         public override void Show()
         {
             base.Show();
@@ -78,64 +53,50 @@
             var client = Connection?.Client;
             var me = client?.LocalPlayer;
             if (me != null)
-            {
                 me.SetCustomProperties(new Photon.Client.PhotonHashtable { ["team"] = null });
-            }
+
             if (Config.CodeGenerator == null)
-            {
                 Debug.LogError("Add a CodeGenerator to the QuantumMenuConfig");
-            }
 
             _sessionCodeField.SetTextWithoutNotify("".PadLeft(Config.CodeGenerator.Length, '-'));
             _sessionCodeField.characterLimit = Config.CodeGenerator.Length;
 
             if (_regionRequest == null || _regionRequest.IsFaulted)
-            {
                 _regionRequest = Connection.RequestAvailableOnlineRegionsAsync(ConnectionArgs);
-            }
 
             ShowUser();
         }
 
-        /// <summary>
-        /// The screen hide method. Calls partial method <see cref="HideUser"/> to be implemented on the SDK side.
-        /// </summary>
         public override void Hide()
         {
             base.Hide();
             HideUser();
         }
 
-        /// <summary>
-        /// Is called when the <see cref="_createButton"/> is pressed using SendMessage() from the UI object.
-        /// </summary>
-        protected virtual async void OnCreateButtonPressed()
-        {
-            await ConnectAsync(true);
-        }
+        protected virtual async void OnCreateButtonPressed() => await ConnectAsync(true);
+        protected virtual async void OnJoinButtonPressed() => await ConnectAsync(false);
 
-        /// <summary>
-        /// Is called when the <see cref="_joinButton"/> is pressed using SendMessage() from the UI object.
-        /// </summary>
-        protected virtual async void OnJoinButtonPressed()
-        {
-            await ConnectAsync(false);
-        }
-
-        /// <summary>
-        /// Is called when the <see cref="_backButton"/> is pressed using SendMessage() from the UI object.
-        /// </summary>
         public virtual void OnBackButtonPressed()
         {
             Controller.Show<QuantumMenuUIMain>();
         }
 
-        /// <summary>
-        /// The connect method to handle create and join.
-        /// Internally the region request is awaited.
-        /// </summary>
-        /// <param name="creating">Create or join</param>
-        /// <returns></returns>
+        static void NormalizeRegionOrder(List<QuantumMenuOnlineRegion> regions)
+        {
+            if (regions == null || regions.Count == 0) return;
+            int asiaIdx = regions.FindIndex(r => string.Equals(r.Code, "asia", StringComparison.OrdinalIgnoreCase));
+            if (asiaIdx <= 0) return;
+            var asia = regions[asiaIdx];
+            regions.RemoveAt(asiaIdx);
+            regions.Insert(0, asia);
+        }
+
+        static bool HasAsia(List<QuantumMenuOnlineRegion> regions)
+        {
+            return regions != null && regions.Any(r => string.Equals(r.Code, "asia", StringComparison.OrdinalIgnoreCase));
+        }
+        // ---------------------------------
+
         protected virtual async System.Threading.Tasks.Task ConnectAsync(bool creating)
         {
             var inputRegionCode = _sessionCodeField.text.ToUpper();
@@ -143,28 +104,18 @@
             {
                 await Controller.PopupAsync(
                     $"The session code '{inputRegionCode}' is not a valid session code. Please enter {Config.CodeGenerator.Length} characters or digits.",
-                    "Invalid Session Code"
-                );
+                    "Invalid Session Code");
                 return;
             }
 
             if (_regionRequest == null || _regionRequest.IsFaulted)
-            {
                 _regionRequest = Connection.RequestAvailableOnlineRegionsAsync(ConnectionArgs);
-            }
 
             Controller.Show<QuantumMenuUILoading>();
             Controller.Get<QuantumMenuUILoading>().SetStatusText(creating ? "Creating Lobby..." : "Joining Lobby...");
 
             List<QuantumMenuOnlineRegion> regions = null;
-            try
-            {
-                regions = await _regionRequest;
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
+            try { regions = await _regionRequest; } catch (Exception e) { Debug.LogException(e); }
 
             if (regions == null || regions.Count == 0)
             {
@@ -173,22 +124,29 @@
                 return;
             }
 
-            // 6. Pick region
+            NormalizeRegionOrder(regions);
+
+#if UNITY_EDITOR
+            Debug.Log("[Regions fetched] " + string.Join(", ", regions.Select(r => r.Code)));
+#endif
+
             int regionIndex = -1;
+
             if (creating)
             {
-                // Force ASIA for creation (ignore PreferredRegion / best-ping)
-                regionIndex = FindAsiaRegionIndex(regions);
-
-                if (regionIndex == -1)
+                if (!HasAsia(regions))
                 {
                     await Controller.PopupAsync("ASIA region is not available right now.", "Connection Failed");
                     Controller.Show<QuantumMenuUIParty>();
                     return;
                 }
 
-                ConnectionArgs.Session = Config.CodeGenerator.EncodeRegion(Config.CodeGenerator.Create(), regionIndex);
-                ConnectionArgs.Region = regions[regionIndex].Code; // should be "asia"
+                regionIndex = 0;
+                ConnectionArgs.Region = regions[regionIndex].Code;   // "asia"
+                ConnectionArgs.PreferredRegion = "asia";
+                ConnectionArgs.Session = Config.CodeGenerator.EncodeRegion(
+                                                    Config.CodeGenerator.Create(),
+                                                    regionIndex);
             }
             else
             {
@@ -197,17 +155,20 @@
                 {
                     await Controller.PopupAsync(
                         $"The session code '{inputRegionCode}' is not a valid session code (cannot decode the region).",
-                        "Invalid Session Code"
-                    );
+                        "Invalid Session Code");
                     return;
                 }
 
                 ConnectionArgs.Session = inputRegionCode;
                 ConnectionArgs.Region = regions[regionIndex].Code;
+                ConnectionArgs.PreferredRegion = "asia"; // optional hint
             }
 
-
             ConnectionArgs.Creating = creating;
+
+#if UNITY_EDITOR
+            Debug.Log($"[Connect] creating={creating} -> Region='{ConnectionArgs.Region}', Preferred='{ConnectionArgs.PreferredRegion}'");
+#endif
 
             HoldLobbyGate.SuppressAutoStart = true;
             Controller.Get<QuantumMenuUILoading>().SetStatusText(creating ? "Creating Lobby..." : "Joining Lobby...");
@@ -238,7 +199,6 @@
                 }
             }
 
-            // Latejoin handling
             var c = Connection.Client;
             var r = c?.CurrentRoom;
             bool started = false, ended = false;
@@ -270,8 +230,7 @@
                             p.CustomProperties.TryGetValue("team", out var val) &&
                             val is int ti)
                         {
-                            if (ti == 0) blue++;
-                            else if (ti == 1) red++;
+                            if (ti == 0) blue++; else if (ti == 1) red++;
                         }
                     }
 
@@ -319,18 +278,15 @@
                 }
             }
 
+            // 11) Show lobby
             Controller.Show<QuantumMenuUILobby>();
 
             static string TeamName(int t) => (t == 1) ? "Red(1)" : (t == 0) ? "Blue(0)" : "None";
         }
 
-
-
         /// <summary>
-        /// Find the region with the lowest ping.
+        /// Original helper kept (unused by creation now, but harmless if referenced).
         /// </summary>
-        /// <param name="regions">Region list</param>
-        /// <returns>The index of the region with the lowest ping</returns>
         protected static int FindBestAvailableOnlineRegionIndex(List<QuantumMenuOnlineRegion> regions)
         {
             var lowestPing = int.MaxValue;
@@ -343,16 +299,7 @@
                     index = i;
                 }
             }
-
             return index;
         }
-
-        protected static int FindAsiaRegionIndex(List<QuantumMenuOnlineRegion> regions)
-        {
-            if (regions == null) return -1;
-            // Photon region code is "asia" (Singapore). Case-insensitive match.
-            return regions.FindIndex(r => string.Equals(r.Code, "asia", StringComparison.OrdinalIgnoreCase));
-        }
-
     }
 }
