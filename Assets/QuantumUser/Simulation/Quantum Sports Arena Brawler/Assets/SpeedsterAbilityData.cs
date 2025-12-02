@@ -4,16 +4,13 @@ using System;
 
 namespace Quantum
 {
-    /// Speedster: brief movespeed boost. No physics changes here;
-    /// movement system swaps to a faster KCC config while active.
     [Serializable]
     public unsafe partial class SpeedsterAbilityData : AbilityData
     {
         public SpeedsterAbilityData()
         {
-            // sensible defaults; tune in the asset
-            Duration = FP._1_50;   // 1.5s
-            KeepVelocity = true;   // IMPORTANT: don't block movement
+            Duration = FP._1_50;
+            KeepVelocity = true;
             FaceCastDirection = false;
             Delay = FP._0;
             AllowConcurrent = true;
@@ -21,7 +18,6 @@ namespace Quantum
 
         public override bool TryActivateAbility(Frame frame, EntityRef entityRef, PlayerStatus* playerStatus, ref Ability ability)
         {
-            // standard buffered activation
             bool activated = base.TryActivateAbility(frame, entityRef, playerStatus, ref ability);
             if (activated)
             {

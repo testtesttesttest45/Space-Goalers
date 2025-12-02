@@ -16,8 +16,10 @@
 
     /// <summary>
     /// Party screen: create or join by session code.
-    /// On create we now force the ASIA region by normalizing the fetched region list (asia at index 0),
+    /// On create we force the ASIA region by normalizing the fetched region list (asia at index 0),
     /// then encoding regionIndex=0 in the session code. On join we normalize first, then decode.
+    ///
+    /// Additionally, we stamp a concrete PreferredRegion ("asia") early so headers never show "Best".
     /// </summary>
     public partial class QuantumMenuUIParty : QuantumMenuUIScreen
     {
@@ -49,6 +51,12 @@
         {
             base.Show();
             SessionReset.ResetSessionStatics();
+
+            if (string.IsNullOrEmpty(ConnectionArgs.PreferredRegion))
+            {
+                ConnectionArgs.PreferredRegion = "asia";
+                ConnectionArgs.SaveToPlayerPrefs();
+            }
 
             var client = Connection?.Client;
             var me = client?.LocalPlayer;
@@ -95,7 +103,27 @@
         {
             return regions != null && regions.Any(r => string.Equals(r.Code, "asia", StringComparison.OrdinalIgnoreCase));
         }
-        // ---------------------------------
+
+        public static string ResolveDisplayRegion(QuantumMenuConnectArgs args, QuantumMenuConnectionBehaviour connection)
+        {
+            if (!string.IsNullOrEmpty(args?.Region))
+                return args.Region;
+
+            if (!string.IsNullOrEmpty(args?.PreferredRegion))
+                return args.PreferredRegion;
+
+            var fixedRegion = PhotonServerSettings.Global?.AppSettings?.FixedRegion;
+            if (!string.IsNullOrEmpty(fixedRegion))
+                return fixedRegion;
+
+            var c = connection?.Client;
+            var live = c?.CurrentRegion ?? c?.CloudRegion;
+            if (!string.IsNullOrEmpty(live))
+                return live;
+
+            return "asia";
+        }
+
 
         protected virtual async System.Threading.Tasks.Task ConnectAsync(bool creating)
         {
@@ -142,11 +170,13 @@
                 }
 
                 regionIndex = 0;
-                ConnectionArgs.Region = regions[regionIndex].Code;   // "asia"
+                ConnectionArgs.Region = regions[regionIndex].Code;
                 ConnectionArgs.PreferredRegion = "asia";
                 ConnectionArgs.Session = Config.CodeGenerator.EncodeRegion(
-                                                    Config.CodeGenerator.Create(),
-                                                    regionIndex);
+                    Config.CodeGenerator.Create(),
+                    regionIndex);
+
+                ConnectionArgs.SaveToPlayerPrefs();
             }
             else
             {
@@ -160,8 +190,10 @@
                 }
 
                 ConnectionArgs.Session = inputRegionCode;
-                ConnectionArgs.Region = regions[regionIndex].Code;
-                ConnectionArgs.PreferredRegion = "asia"; // optional hint
+                string decoded = regions[regionIndex].Code;
+                ConnectionArgs.Region = decoded;
+                ConnectionArgs.PreferredRegion = decoded;
+                ConnectionArgs.SaveToPlayerPrefs();
             }
 
             ConnectionArgs.Creating = creating;
@@ -243,7 +275,7 @@
 
                     if (currentTeam != desiredTeam)
                     {
-                        Debug.Log($"[LateJoin] Rebalance: Actor={local.ActorNumber} {TeamName(currentTeam)} -> {TeamName(desiredTeam)} (Blue={blue}, Red={red})");
+                        Debug.Log($"[LateJoin] Rebalance: Actor={local.ActorNumber} {(currentTeam == 1 ? "Red(1)" : currentTeam == 0 ? "Blue(0)" : "None")} -> {(desiredTeam == 1 ? "Red(1)" : "Blue(0)")} (Blue={blue}, Red={red})");
                         local.SetCustomProperties(new Photon.Client.PhotonHashtable { ["team"] = desiredTeam });
 
                         float t0 = Time.realtimeSinceStartup;
@@ -257,7 +289,7 @@
                     }
                     else
                     {
-                        Debug.Log($"[LateJoin] Already on balanced team: Actor={local.ActorNumber} {TeamName(currentTeam)} (Blue={blue}, Red={red})");
+                        Debug.Log($"[LateJoin] Already on balanced team: Actor={local.ActorNumber} {(currentTeam == 1 ? "Red(1)" : "Blue(0)")} (Blue={blue}, Red={red})");
                     }
                 }
 
@@ -278,28 +310,7 @@
                 }
             }
 
-            // 11) Show lobby
             Controller.Show<QuantumMenuUILobby>();
-
-            static string TeamName(int t) => (t == 1) ? "Red(1)" : (t == 0) ? "Blue(0)" : "None";
-        }
-
-        /// <summary>
-        /// Original helper kept (unused by creation now, but harmless if referenced).
-        /// </summary>
-        protected static int FindBestAvailableOnlineRegionIndex(List<QuantumMenuOnlineRegion> regions)
-        {
-            var lowestPing = int.MaxValue;
-            var index = -1;
-            for (int i = 0; regions != null && i < regions.Count; i++)
-            {
-                if (regions[i].Ping < lowestPing)
-                {
-                    lowestPing = regions[i].Ping;
-                    index = i;
-                }
-            }
-            return index;
         }
     }
 }

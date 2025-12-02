@@ -13,7 +13,8 @@ public class UICancelAreaManager : MonoBehaviour
     [SerializeField] private Color normalColor = new Color(1f, 1f, 1f, 0.65f);
     [SerializeField] private Color hoverColor = new Color(1f, 0.3f, 0.3f, 1f);
 
-    [SerializeField] private float uiScale = 1f;
+    // Only used for snap radius now (not visual scale)
+    [SerializeField] private float uiScale = 0.5f;
     [SerializeField] private float snapRadiusBase = 80f;
 
     private Canvas _rootCanvas;
@@ -21,8 +22,9 @@ public class UICancelAreaManager : MonoBehaviour
     private bool _isHovering;
 
     public float CancelSnapRadius => snapRadiusBase * uiScale;
-    private Vector3 _scaleNormal;
-    private Vector3 _scaleHover;
+
+    private static readonly Vector3 kScaleNormal = Vector3.one * 0.6f;
+    private static readonly Vector3 kScaleHover = Vector3.one * 0.7f;
 
     void Awake()
     {
@@ -34,8 +36,6 @@ public class UICancelAreaManager : MonoBehaviour
         Instance = this;
         _rootCanvas = GetComponentInParent<Canvas>();
 
-        _scaleNormal = Vector3.one * uiScale;
-        _scaleHover = _scaleNormal;
         Hide();
     }
 
@@ -43,7 +43,7 @@ public class UICancelAreaManager : MonoBehaviour
     {
         if (!cancelArea) return;
         cancelArea.gameObject.SetActive(true);
-        cancelArea.localScale = _scaleNormal;
+        cancelArea.localScale = kScaleNormal;
         if (cancelCrossImage) cancelCrossImage.color = normalColor;
         _isVisible = true;
         _isHovering = false;
@@ -82,7 +82,7 @@ public class UICancelAreaManager : MonoBehaviour
         if (hit != _isHovering)
         {
             _isHovering = hit;
-            cancelArea.localScale = _isHovering ? _scaleHover : _scaleNormal;
+            cancelArea.localScale = _isHovering ? kScaleHover : kScaleNormal;
             if (cancelCrossImage)
                 cancelCrossImage.color = _isHovering ? hoverColor : normalColor;
         }
@@ -90,15 +90,13 @@ public class UICancelAreaManager : MonoBehaviour
         return _isHovering;
     }
 
+    // Kept for callers that change sensitivity; visual size stays 0.6/0.7.
     public void SetScale(float s)
     {
         uiScale = s;
-        _scaleNormal = Vector3.one * s;
-        _scaleHover = Vector3.one * (s * 1.1f);
         if (_isVisible && cancelArea)
-            cancelArea.localScale = _isHovering ? _scaleHover : _scaleNormal;
+            cancelArea.localScale = _isHovering ? kScaleHover : kScaleNormal;
     }
-
 
     public bool IsHovering => _isHovering;
 }

@@ -22,10 +22,10 @@ public class UIAbilityController : MonoBehaviour
     private QuantumDemoInputTopDownMobile _mobile;
     private bool _built;
 
-    private static readonly Vector2 POS_UTILITY = new Vector2(-765f, -176f);
-    private static readonly Vector2 POS_MAIN2 = new Vector2(-550f, 0f);
-    private static readonly Vector2 POS_MAIN1 = new Vector2(-285f, 100f);
-    private static readonly Vector2 POS_JUMP = new Vector2(-389, -179f);
+    private static readonly Vector2 POS_UTILITY = new Vector2(-686f, -176f);
+    private static readonly Vector2 POS_MAIN2 = new Vector2(-547f, 0f);
+    private static readonly Vector2 POS_MAIN1 = new Vector2(-358, 63f);
+    private static readonly Vector2 POS_JUMP = new Vector2(-409, -179f);
     private bool _hadBallLastFrame = false;
     private void Awake()
     {

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6892798084413801146}
-  - component: {fileID: 7670575221234041375}
+  - component: {fileID: 389818480561844924}
   m_Layer: 10
   m_Name: Audio Source
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5411704468013720365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7670575221234041375
+--- !u!82 &389818480561844924
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5627,9 +5627,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionClip: {fileID: 8300000, guid: c154cc1460010624cb37b347c4b81022, type: 3}
-  audioSource: {fileID: 7670575221234041375}
+  audioSource: {fileID: 389818480561844924}
   volume: 1
-  fuse: {fileID: 0}
 --- !u!1 &6398162796068834549
 GameObject:
   m_ObjectHideFlags: 0
@@ -15654,6 +15653,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4540433821511749899, guid: 7bc7878c49be95d438acc3a15e505a99,
+        type: 3}
+      propertyPath: audio2D
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4540433821511749899, guid: 7bc7878c49be95d438acc3a15e505a99,
+        type: 3}
+      propertyPath: fuseLoop
+      value: 
+      objectReference: {fileID: 8300000, guid: 59b2169ec3dc01a4daef97193b1cb5af, type: 3}
     - target: {fileID: 4540433821511749899, guid: 7bc7878c49be95d438acc3a15e505a99,
         type: 3}
       propertyPath: explodeClip
