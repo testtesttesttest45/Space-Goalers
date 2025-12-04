@@ -100,23 +100,29 @@
             AwakeUser();
     }
 
-    /// <summary>
-    /// The screen init method. Calls partial method <see cref="InitUser"/> to be implemented on the SDK side.
-    /// Initialized the default arguments.
-    /// </summary>
-    public override void Init() {
-      base.Init();
+        /// <summary>
+        /// The screen init method. Calls partial method <see cref="InitUser"/> to be implemented on the SDK side.
+        /// Initialized the default arguments.
+        /// </summary>
+        public override void Init()
+        {
+            base.Init();
 
-      ConnectionArgs.LoadFromPlayerPrefs();
-      ConnectionArgs.SetDefaults(Config);
+            ConnectionArgs.LoadFromPlayerPrefs();
+            ConnectionArgs.SetDefaults(Config);
 
-      InitUser();
-    }
+            // 🔥 FORCE true app version for ALL platforms BEFORE UI loads
+            ConnectionArgs.AppVersion = Application.version;
+            ConnectionArgs.SaveToPlayerPrefs();
 
-    /// <summary>
-    /// The screen show method. Calls partial method <see cref="ShowUser"/> to be implemented on the SDK side.
-    /// </summary>
-    public override void Show() {
+            InitUser();
+        }
+
+
+        /// <summary>
+        /// The screen show method. Calls partial method <see cref="ShowUser"/> to be implemented on the SDK side.
+        /// </summary>
+        public override void Show() {
       base.Show();
 
       // Always reset the region, it's set again when transitioning to online modes (quick play, party or mmpm)

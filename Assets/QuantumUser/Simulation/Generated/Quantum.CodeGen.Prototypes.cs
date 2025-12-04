@@ -192,6 +192,7 @@ namespace Quantum.Prototypes {
     public FP ContactTriggerRadius;
     public QBoolean GroundFuseArmed;
     public QBoolean Exploded;
+    public AssetRef<KnockbackStatusEffectData> BombKnockbackData;
     public override Boolean AddToEntity(FrameBase f, EntityRef entity, in PrototypeMaterializationContext context) {
         Quantum.BombState component = default;
         Materialize((Frame)f, ref component, in context);
@@ -216,6 +217,7 @@ namespace Quantum.Prototypes {
         result.ContactTriggerRadius = this.ContactTriggerRadius;
         result.GroundFuseArmed = this.GroundFuseArmed;
         result.Exploded = this.Exploded;
+        result.BombKnockbackData = this.BombKnockbackData;
     }
   }
   [System.SerializableAttribute()]
@@ -538,10 +540,12 @@ namespace Quantum.Prototypes {
   public unsafe partial class StatusEffectConfigPrototype : StructPrototype {
     public Quantum.QEnum32<StatusEffectType> Type;
     public FP Duration;
+    public AssetRef<KnockbackStatusEffectData> KnockbackData;
     partial void MaterializeUser(Frame frame, ref Quantum.StatusEffectConfig result, in PrototypeMaterializationContext context);
     public void Materialize(Frame frame, ref Quantum.StatusEffectConfig result, in PrototypeMaterializationContext context = default) {
         result.Type = this.Type;
         result.Duration = this.Duration;
+        result.KnockbackData = this.KnockbackData;
         MaterializeUser(frame, ref result, in context);
     }
   }

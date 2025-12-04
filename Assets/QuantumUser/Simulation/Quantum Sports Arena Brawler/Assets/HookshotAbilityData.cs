@@ -124,7 +124,15 @@ namespace Quantum
                                         FPVector3 kb = (attackerTf->Position - victimTf->Position);
                                         kb.Y = FP._0;
                                         kb = kb.SqrMagnitude > FP._0 ? kb.Normalized : FPVector3.Forward;
-                                        frame.Signals.OnKnockbackApplied(victim, effect.Duration, kb);
+                                        victimStatus->KnockbackStatusEffect.StatusEffectData = effect.KnockbackData;
+
+                                        frame.Signals.OnKnockbackApplied(
+                                            victim,
+                                            effect.Duration,
+                                            kb,
+                                            effect.KnockbackData
+                                        );
+
                                     }
                                 }
                             }

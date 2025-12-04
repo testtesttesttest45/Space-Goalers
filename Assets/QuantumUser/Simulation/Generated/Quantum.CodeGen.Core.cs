@@ -1124,23 +1124,27 @@ namespace Quantum {
   [StructLayout(LayoutKind.Explicit)]
   [Serializable()]
   public unsafe partial struct StatusEffectConfig {
-    public const Int32 SIZE = 16;
+    public const Int32 SIZE = 24;
     public const Int32 ALIGNMENT = 8;
     [FieldOffset(0)]
     public StatusEffectType Type;
-    [FieldOffset(8)]
+    [FieldOffset(16)]
     public FP Duration;
+    [FieldOffset(8)]
+    public AssetRef<KnockbackStatusEffectData> KnockbackData;
     public override readonly Int32 GetHashCode() {
       unchecked { 
         var hash = 9743;
         hash = hash * 31 + (Int32)Type;
         hash = hash * 31 + Duration.GetHashCode();
+        hash = hash * 31 + KnockbackData.GetHashCode();
         return hash;
       }
     }
     public static void Serialize(void* ptr, FrameSerializer serializer) {
         var p = (StatusEffectConfig*)ptr;
         serializer.Stream.Serialize((Int32*)&p->Type);
+        AssetRef.Serialize(&p->KnockbackData, serializer);
         FP.Serialize(&p->Duration, serializer);
     }
   }
@@ -1485,41 +1489,43 @@ namespace Quantum {
   }
   [StructLayout(LayoutKind.Explicit)]
   public unsafe partial struct BombState : Quantum.IComponent {
-    public const Int32 SIZE = 872;
+    public const Int32 SIZE = 880;
     public const Int32 ALIGNMENT = 8;
-    [FieldOffset(24)]
+    [FieldOffset(32)]
     public EntityRef Owner;
     [FieldOffset(4)]
     public PlayerTeam OwnerTeam;
-    [FieldOffset(104)]
+    [FieldOffset(112)]
     [FramePrinter.FixedArrayAttribute(typeof(FPVector3), 32)]
     private fixed Byte _Path_[768];
     [FieldOffset(0)]
     public Int32 PathCount;
-    [FieldOffset(96)]
+    [FieldOffset(104)]
     public FP PathTotalLen;
-    [FieldOffset(80)]
-    public FP PathDist;
     [FieldOffset(88)]
+    public FP PathDist;
+    [FieldOffset(96)]
     public FP PathSpeed;
     [FieldOffset(12)]
     public QBoolean Finished;
-    [FieldOffset(64)]
-    public FP HandoffDistance;
-    [FieldOffset(40)]
-    public FP DownwardBias;
-    [FieldOffset(48)]
-    public FP ExplosionRadius;
     [FieldOffset(72)]
-    public FP LifeTimeLeft;
+    public FP HandoffDistance;
+    [FieldOffset(48)]
+    public FP DownwardBias;
     [FieldOffset(56)]
+    public FP ExplosionRadius;
+    [FieldOffset(80)]
+    public FP LifeTimeLeft;
+    [FieldOffset(64)]
     public FP GroundFuseLeft;
-    [FieldOffset(32)]
+    [FieldOffset(40)]
     public FP ContactTriggerRadius;
     [FieldOffset(16)]
     public QBoolean GroundFuseArmed;
     [FieldOffset(8)]
     public QBoolean Exploded;
+    [FieldOffset(24)]
+    public AssetRef<KnockbackStatusEffectData> BombKnockbackData;
     public readonly FixedArray<FPVector3> Path {
       get {
         fixed (byte* p = _Path_) { return new FixedArray<FPVector3>(p, 24, 32); }
@@ -1544,6 +1550,7 @@ namespace Quantum {
         hash = hash * 31 + ContactTriggerRadius.GetHashCode();
         hash = hash * 31 + GroundFuseArmed.GetHashCode();
         hash = hash * 31 + Exploded.GetHashCode();
+        hash = hash * 31 + BombKnockbackData.GetHashCode();
         return hash;
       }
     }
@@ -1554,6 +1561,7 @@ namespace Quantum {
         QBoolean.Serialize(&p->Exploded, serializer);
         QBoolean.Serialize(&p->Finished, serializer);
         QBoolean.Serialize(&p->GroundFuseArmed, serializer);
+        AssetRef.Serialize(&p->BombKnockbackData, serializer);
         EntityRef.Serialize(&p->Owner, serializer);
         FP.Serialize(&p->ContactTriggerRadius, serializer);
         FP.Serialize(&p->DownwardBias, serializer);
@@ -1762,7 +1770,7 @@ namespace Quantum {
     void OnStunApplied(Frame f, EntityRef playerEntityRef, FP duration);
   }
   public unsafe partial interface ISignalOnKnockbackApplied : ISignal {
-    void OnKnockbackApplied(Frame f, EntityRef playerEntityRef, FP duration, FPVector3 direction);
+    void OnKnockbackApplied(Frame f, EntityRef playerEntityRef, FP duration, FPVector3 direction, AssetRef<KnockbackStatusEffectData> data);
   }
   public unsafe partial interface ISignalOnStatusEffectsReset : ISignal {
     void OnStatusEffectsReset(Frame f, EntityRef playerEntityRef);
@@ -2013,12 +2021,12 @@ namespace Quantum {
           }
         }
       }
-      public void OnKnockbackApplied(EntityRef playerEntityRef, FP duration, FPVector3 direction) {
+      public void OnKnockbackApplied(EntityRef playerEntityRef, FP duration, FPVector3 direction, AssetRef<KnockbackStatusEffectData> data) {
         var array = _f._ISignalOnKnockbackAppliedSystems;
         for (Int32 i = 0; i < array.Length; ++i) {
           var s = array[i];
           if (_f.SystemIsEnabledInHierarchy((SystemBase)s)) {
-            s.OnKnockbackApplied(_f, playerEntityRef, duration, direction);
+            s.OnKnockbackApplied(_f, playerEntityRef, duration, direction, data);
           }
         }
       }

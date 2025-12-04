@@ -64,3 +64,6 @@ MonoBehaviour:
     RawValue: 65536
   KnockbackDuration:
     RawValue: 19661
+  BombKnockbackData:
+    Id:
+      Value: 418862854819265942

@@ -78,6 +78,7 @@ component BombState
   FP ContactTriggerRadius;
   bool GroundFuseArmed;
   bool Exploded;
+  AssetRef<KnockbackStatusEffectData> BombKnockbackData; 
 }
 
 component BallTrajectoryState

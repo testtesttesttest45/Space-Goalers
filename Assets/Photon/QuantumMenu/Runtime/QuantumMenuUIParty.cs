@@ -117,7 +117,7 @@
                 return fixedRegion;
 
             var c = connection?.Client;
-            var live = c?.CurrentRegion ?? c?.CloudRegion;
+            var live = c?.CurrentRegion ?? c?.CurrentRegion;
             if (!string.IsNullOrEmpty(live))
                 return live;
 

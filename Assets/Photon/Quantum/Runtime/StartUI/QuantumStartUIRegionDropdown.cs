@@ -90,7 +90,7 @@ namespace Quantum {
           OnFetchingStart?.Invoke();
           _cachedRegions = (await GetAvailableRegionsAsync()).Select(s => new OptionData(s)).ToList();
           _cachedRegions.Sort((a, b) => string.Compare(a.text, b.text, CultureInfo.InvariantCulture, CompareOptions.Ordinal));
-          _cachedRegions.Insert(0, new OptionData { text = "Best Region" });
+          _cachedRegions.Insert(0, new OptionData { text = "asia" });
         } catch (Exception e) {
           Debug.LogError($"Failed to fetch regions: {e.Message}");
           _cachedRegions = backupRegions;

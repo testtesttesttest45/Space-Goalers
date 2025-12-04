@@ -68,6 +68,7 @@ namespace Quantum.Prototypes.Unity {
     public FP ContactTriggerRadius;
     public QBoolean GroundFuseArmed;
     public QBoolean Exploded;
+    public AssetRef<KnockbackStatusEffectData> BombKnockbackData;
     partial void ConvertUser(Quantum.QuantumEntityPrototypeConverter converter, ref Quantum.Prototypes.BombStatePrototype prototype);
     public override Quantum.Prototypes.BombStatePrototype Convert(Quantum.QuantumEntityPrototypeConverter converter) {
       var result = new Quantum.Prototypes.BombStatePrototype();
@@ -87,6 +88,7 @@ namespace Quantum.Prototypes.Unity {
       converter.Convert(this.ContactTriggerRadius, out result.ContactTriggerRadius);
       converter.Convert(this.GroundFuseArmed, out result.GroundFuseArmed);
       converter.Convert(this.Exploded, out result.Exploded);
+      converter.Convert(this.BombKnockbackData, out result.BombKnockbackData);
       ConvertUser(converter, ref result);
       return result;
     }

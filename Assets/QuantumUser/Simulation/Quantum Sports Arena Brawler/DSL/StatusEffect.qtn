@@ -13,7 +13,7 @@ struct KnockbackStatusEffect : StatusEffect
     [ExcludeFromPrototype] FPVector3 KnockbackDirection;
     [ExcludeFromPrototype] FPVector3 KnockbackVelocity;
     
-    asset_ref<KnockbackStatusEffectData> StatusEffectData;
+    AssetRef<KnockbackStatusEffectData> StatusEffectData;
 }
 
 [Serializable]
@@ -21,9 +21,9 @@ struct StatusEffectConfig
 {
     StatusEffectType Type;
     FP Duration;
+    AssetRef<KnockbackStatusEffectData> KnockbackData;
 }
 
 signal OnStunApplied(entity_ref playerEntityRef, FP duration);
-signal OnKnockbackApplied(entity_ref playerEntityRef, FP duration, FPVector3 direction);
-
+signal OnKnockbackApplied(entity_ref playerEntityRef, FP duration, FPVector3 direction, asset_ref<KnockbackStatusEffectData> data);
 signal OnStatusEffectsReset(entity_ref playerEntityRef);

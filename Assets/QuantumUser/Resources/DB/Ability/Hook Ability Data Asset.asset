@@ -81,6 +81,12 @@ MonoBehaviour:
   - Type: 0
     Duration:
       RawValue: 49152
+    KnockbackData:
+      Id:
+        Value: 0
   - Type: 1
     Duration:
       RawValue: 49152
+    KnockbackData:
+      Id:
+        Value: 471171406137571896

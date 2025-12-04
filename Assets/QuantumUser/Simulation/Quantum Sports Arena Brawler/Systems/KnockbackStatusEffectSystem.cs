@@ -53,20 +53,20 @@ namespace Quantum
             return relativePosition;
         }
 
-        public void OnKnockbackApplied(Frame frame, EntityRef playerEntityRef, FP duration, FPVector3 direction)
+        public void OnKnockbackApplied(Frame frame,
+    EntityRef playerEntityRef,
+    FP duration,
+    FPVector3 direction,
+    AssetRef<KnockbackStatusEffectData> data)
         {
-            PlayerStatus* playerStatus = frame.Unsafe.GetPointer<PlayerStatus>(playerEntityRef);
-            PlayerMovementData playerMovementData = frame.FindAsset<PlayerMovementData>(playerStatus->PlayerMovementData.Id);
+            PlayerStatus* status = frame.Unsafe.GetPointer<PlayerStatus>(playerEntityRef);
 
-            playerStatus->KnockbackStatusEffect.DurationTimer.Start(duration);
-            playerStatus->KnockbackStatusEffect.KnockbackDirection = direction;
+            status->KnockbackStatusEffect.DurationTimer.Start(duration);
+            status->KnockbackStatusEffect.KnockbackDirection = direction;
+            status->KnockbackStatusEffect.StatusEffectData = data;
 
-            if (playerStatus->IsHoldingBall)
-            {
-                frame.Signals.OnBallDropped(playerStatus->HoldingBallEntityRef);
-            }
-
-            playerMovementData.UpdateKCCSettings(frame, playerEntityRef);
+            if (status->IsHoldingBall)
+                frame.Signals.OnBallDropped(status->HoldingBallEntityRef);
         }
 
         public void OnStatusEffectsReset(Frame frame, EntityRef playerEntityRef)

@@ -63,11 +63,11 @@ namespace Quantum {
     public BallHandlingData FindAsset(AssetRefBallHandlingData assetRef) {
          return this.FindAsset<BallHandlingData>(assetRef.Id);
     }
-    public PlayerMovementData FindAsset(AssetRefPlayerMovementData assetRef) {
-         return this.FindAsset<PlayerMovementData>(assetRef.Id);
-    }
     public KnockbackStatusEffectData FindAsset(AssetRefKnockbackStatusEffectData assetRef) {
          return this.FindAsset<KnockbackStatusEffectData>(assetRef.Id);
+    }
+    public PlayerMovementData FindAsset(AssetRefPlayerMovementData assetRef) {
+         return this.FindAsset<PlayerMovementData>(assetRef.Id);
     }
     public Map FindAsset(AssetRefMap assetRef) {
          return this.FindAsset<Map>(assetRef.Id);
@@ -122,12 +122,12 @@ namespace Quantum {
          return _f.FindAsset<BallHandlingData>(assetRef.Id);
       }
       [System.ObsoleteAttribute("Use Frame.FindAsset instead")]
-      public PlayerMovementData PlayerMovementData(AssetRefPlayerMovementData assetRef) {
-         return _f.FindAsset<PlayerMovementData>(assetRef.Id);
-      }
-      [System.ObsoleteAttribute("Use Frame.FindAsset instead")]
       public KnockbackStatusEffectData KnockbackStatusEffectData(AssetRefKnockbackStatusEffectData assetRef) {
          return _f.FindAsset<KnockbackStatusEffectData>(assetRef.Id);
+      }
+      [System.ObsoleteAttribute("Use Frame.FindAsset instead")]
+      public PlayerMovementData PlayerMovementData(AssetRefPlayerMovementData assetRef) {
+         return _f.FindAsset<PlayerMovementData>(assetRef.Id);
       }
       [System.ObsoleteAttribute("Use Frame.FindAsset instead")]
       public Map Map(AssetRefMap assetRef) {

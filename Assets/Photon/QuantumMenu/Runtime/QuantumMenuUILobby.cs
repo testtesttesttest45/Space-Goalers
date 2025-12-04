@@ -305,29 +305,26 @@ namespace Quantum.Menu
             if (_startButton == null) return;
             if (Client?.CurrentRoom == null || Client.LocalPlayer == null) return;
 
-            var label = _startButton.transform.Find("Label")?.GetComponent<Text>();
+            var label = _startButton.GetComponentInChildren<Text>(true);
             var background = _startButton.transform.Find("Background")?.GetComponent<Image>();
-            if (!background) background = _startButton.GetComponent<Image>(); // fallback
+            if (!background) background = _startButton.GetComponent<Image>();
 
-            bool isHost = Client.CurrentRoom.MasterClientId == Client.LocalPlayer.ActorNumber;
+            bool isHost = IsHost();
 
             if (isHost)
             {
                 if (label) label.text = "Start";
                 _startButton.interactable = true;
-
-                Color green = new Color(0.3f, 1f, 0.3f);
-                background.color = green;
+                background.color = new Color(0.3f, 1f, 0.3f); // green
             }
             else
             {
                 if (label) label.text = "Waiting for Host";
                 _startButton.interactable = false;
-
-                Color gray = new Color(0.35f, 0.35f, 0.35f);
-                background.color = gray;
+                background.color = new Color(0.35f, 0.35f, 0.35f); // grey
             }
         }
+
 
         private async void OnStartPressed()
         {

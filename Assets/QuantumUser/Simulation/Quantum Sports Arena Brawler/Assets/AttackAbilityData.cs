@@ -73,8 +73,18 @@ namespace Quantum
                                         break;
 
                                     case StatusEffectType.Knockback:
-                                        frame.Signals.OnKnockbackApplied(hit.Entity, statusEffectConfig.Duration, hitLateralDirection);
+                                        {
+                                            hitPlayerStatus->KnockbackStatusEffect.StatusEffectData = statusEffectConfig.KnockbackData;
+
+                                            frame.Signals.OnKnockbackApplied(
+                                                hit.Entity,
+                                                statusEffectConfig.Duration,
+                                                hitLateralDirection,
+                                                statusEffectConfig.KnockbackData
+                                            );
+                                        }
                                         break;
+
                                     default:
                                         throw new System.ArgumentException($"Unknown {nameof(StatusEffectType)}: {statusEffectConfig.Type}", nameof(statusEffectConfig.Type));
                                 }

@@ -1,6 +1,7 @@
 ﻿using System;
-using Photon.Deterministic;
 using Quantum.Physics3D;
+using Quantum;
+using Photon.Deterministic;
 
 namespace Quantum
 {
@@ -22,6 +23,7 @@ namespace Quantum
         public FP LifeTimeSeconds = FP.FromFloat_UNSAFE(5.0f);
         public FP ContactTriggerMeters = FP.FromFloat_UNSAFE(0.4f);
         public FP KnockbackDuration = FP.FromFloat_UNSAFE(0.4f);
+        public AssetRef<KnockbackStatusEffectData> BombKnockbackData;
 
         public BombAbilityData()
         {
@@ -91,6 +93,7 @@ namespace Quantum
             var bomb = frame.Create(BombPrototype);
             var bTr = frame.Unsafe.GetPointer<Transform3D>(bomb);
             var bombState = frame.Unsafe.GetPointer<BombState>(bomb);
+            bombState->BombKnockbackData = BombKnockbackData;
 
             bTr->Position = playerTr->Position + (inv->ActiveAbilityInfo.CastRotation * LocalSpawnOffset);
             bTr->Rotation = inv->ActiveAbilityInfo.CastRotation;
@@ -387,7 +390,12 @@ namespace Quantum
                     frame.Events.OnPlayerBlockHit(target, dir);
                 else
                 {
-                    frame.Signals.OnKnockbackApplied(target, FP.FromFloat_UNSAFE(0.25f), dir);
+                    frame.Signals.OnKnockbackApplied(
+    target,
+    FP.FromFloat_UNSAFE(0.25f),
+    dir,
+    st->BombKnockbackData
+);
                     frame.Events.OnPlayerHit(target);
                 }
             }
