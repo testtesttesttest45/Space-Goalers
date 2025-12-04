@@ -23,7 +23,7 @@ MonoBehaviour:
   Duration:
     RawValue: 131072
   Cooldown:
-    RawValue: 786432
+    RawValue: 589824
   AvailabilityType: 0
   CastDirectionType: -1
   FaceCastDirection: 1

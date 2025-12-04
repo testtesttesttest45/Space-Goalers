@@ -1,5 +1,4 @@
-﻿// QuantumMenuUISettings.cs
-namespace Quantum.Menu
+﻿namespace Quantum.Menu
 {
     using System;
     using System.Collections.Generic;
@@ -15,16 +14,15 @@ namespace Quantum.Menu
     using UnityEngine;
     using UnityEngine.UI;
 
-    /// <summary>
-    /// Settings screen. All legacy graphics/network UI kept but hidden/locked.
-    /// New: BGM & SFX sliders that only affect menu audio.
     /// </summary>
     public partial class QuantumMenuUISettings : QuantumMenuUIScreen
     {
         [InlineHelp, SerializeField] protected Dropdown _uiAppVersion;
         [InlineHelp, SerializeField] protected GameObject _goAppVersion;
+
         [InlineHelp, SerializeField] protected Toggle _uiFullscreen;
         [InlineHelp, SerializeField] protected GameObject _goFullscreenn;
+
         [InlineHelp, SerializeField] protected Dropdown _uiFramerate;
         [InlineHelp, SerializeField] protected Dropdown _uiGraphicsQuality;
         [InlineHelp, SerializeField] protected InputField _uiMaxPlayers;
@@ -32,28 +30,32 @@ namespace Quantum.Menu
         [InlineHelp, SerializeField] protected GameObject _goRegion;
         [InlineHelp, SerializeField] protected Dropdown _uiResolution;
         [InlineHelp, SerializeField] protected GameObject _goResolution;
+
         [InlineHelp, SerializeField] protected Toggle _uiVSyncCount;
         [InlineHelp, SerializeField] protected Button _backButton;
         [InlineHelp, SerializeField] protected Text _sdkLabel;
 
-        [Header("Menu Audio (BGM/SFX)")]
+        [Header("Menu Audio (BGM / SFX)")]
         [SerializeField] private Slider _bgmSlider;
         [SerializeField] private Slider _sfxSlider;
 
-        [Header("Locked Defaults (hidden from players)")]
+        [Header("Locked Defaults")]
         [SerializeField] private string _defaultRegion = "asia";
         [SerializeField] private bool _defaultVSync = false;
         [SerializeField] private int _defaultTargetFps = 60;
         [SerializeField] private string _defaultQualityName = "Low Fidelity";
+
         [SerializeField] private bool _lockAndHide = true;
 
-        protected QuantumMenuSettingsEntry<string> _entryRegion;
-        protected QuantumMenuSettingsEntry<string> _entryAppVersion;
-        protected QuantumMenuSettingsEntry<int> _entryFramerate;
-        protected QuantumMenuSettingsEntry<int> _entryResolution;
-        protected QuantumMenuSettingsEntry<int> _entryGraphicsQuality;
-        protected QuantumMenuGraphicsSettings _graphicsSettings;
-        protected List<string> _appVersions;
+        // Internal
+        private QuantumMenuSettingsEntry<string> _entryRegion;
+        private QuantumMenuSettingsEntry<string> _entryAppVersion;
+        private QuantumMenuSettingsEntry<int> _entryFramerate;
+        private QuantumMenuSettingsEntry<int> _entryResolution;
+        private QuantumMenuSettingsEntry<int> _entryGraphicsQuality;
+
+        private QuantumMenuGraphicsSettings _graphicsSettings;
+        private List<string> _appVersions;
 
         partial void AwakeUser();
         partial void InitUser();
@@ -66,21 +68,22 @@ namespace Quantum.Menu
             base.Awake();
 
             _appVersions = new List<string>();
-            if (Config.MachineId != null) _appVersions.Add(Config.MachineId);
+            _appVersions.Add(Application.version);
             _appVersions.AddRange(Config.AvailableAppVersions);
 
             _entryRegion = new QuantumMenuSettingsEntry<string>(_uiRegion, SaveChanges);
             _entryAppVersion = new QuantumMenuSettingsEntry<string>(_uiAppVersion, SaveChanges);
+
             _entryFramerate = new QuantumMenuSettingsEntry<int>(_uiFramerate, SaveChanges);
             _entryResolution = new QuantumMenuSettingsEntry<int>(_uiResolution, SaveChanges);
             _entryGraphicsQuality = new QuantumMenuSettingsEntry<int>(_uiGraphicsQuality, SaveChanges);
 
-            _uiMaxPlayers.onEndEdit.AddListener(s => {
-                if (Int32.TryParse(s, out var maxPlayers) == false || maxPlayers <= 0 || maxPlayers > Config.MaxPlayerCount)
-                {
-                    maxPlayers = Math.Clamp(maxPlayers, 1, Config.MaxPlayerCount);
-                    _uiMaxPlayers.text = maxPlayers.ToString();
-                }
+            _uiMaxPlayers.onEndEdit.AddListener(s =>
+            {
+                if (!Int32.TryParse(s, out var m) || m <= 0 || m > Config.MaxPlayerCount)
+                    m = Math.Clamp(m, 1, Config.MaxPlayerCount);
+
+                _uiMaxPlayers.text = m.ToString();
                 SaveChanges();
             });
 
@@ -88,13 +91,12 @@ namespace Quantum.Menu
             _uiFullscreen.onValueChanged.AddListener(_ => SaveChanges());
 
             _graphicsSettings = new QuantumMenuGraphicsSettings();
+
 #if UNITY_IOS || UNITY_ANDROID
             PlayerPrefs.SetInt("Photon.Menu.Framerate", 60);
             PlayerPrefs.SetInt("Photon.Menu.VSync", 0);
             PlayerPrefs.Save();
-#endif
 
-#if UNITY_IOS || UNITY_ANDROID
             _goResolution.SetActive(false);
             _goFullscreenn.SetActive(false);
 #endif
@@ -102,16 +104,10 @@ namespace Quantum.Menu
             if (_lockAndHide)
             {
                 if (_goRegion) _goRegion.SetActive(false);
-                if (_goAppVersion) _goAppVersion.SetActive(false);
                 if (_uiFramerate) _uiFramerate.gameObject.SetActive(false);
                 if (_uiGraphicsQuality) _uiGraphicsQuality.gameObject.SetActive(false);
                 if (_uiVSyncCount) _uiVSyncCount.gameObject.SetActive(false);
                 ApplyLockedDefaults();
-            }
-            else
-            {
-                if (_goAppVersion) _goAppVersion.SetActive(Config.AvailableAppVersions.Count > 0);
-                if (_goRegion) _goRegion.SetActive(Config.AvailableRegions.Count > 0);
             }
 
             AwakeUser();
@@ -127,47 +123,45 @@ namespace Quantum.Menu
         {
             base.Show();
 
-            if (!_lockAndHide)
-            {
-                _entryRegion.SetOptions(Config.AvailableRegions, ConnectionArgs.PreferredRegion, s => string.IsNullOrEmpty(s) ? "Best" : s);
-                _entryAppVersion.SetOptions(_appVersions, ConnectionArgs.AppVersion, s => s.Equals(Config.MachineId) ? $"Build ({Config.MachineId})" : s);
-                _entryFramerate.SetOptions(_graphicsSettings.CreateFramerateOptions, _graphicsSettings.Framerate, s => (s == -1 ? "Platform Default" : s.ToString()));
-                _entryResolution.SetOptions(_graphicsSettings.CreateResolutionOptions, _graphicsSettings.Resolution, s =>
-#if UNITY_2022_2_OR_NEWER
-                  $"{Screen.resolutions[s].width} x {Screen.resolutions[s].height} @ {Mathf.RoundToInt((float)Screen.resolutions[s].refreshRateRatio.value)}");
-#else
-                  Screen.resolutions[s].ToString());
-#endif
-                _entryGraphicsQuality.SetOptions(_graphicsSettings.CreateGraphicsQualityOptions, _graphicsSettings.QualityLevel, s => QualitySettings.names[s]);
-                _uiFullscreen.isOn = _graphicsSettings.Fullscreen;
-                _uiVSyncCount.isOn = _graphicsSettings.VSync;
-            }
-            else
-            {
-                _uiFullscreen.isOn = _graphicsSettings.Fullscreen;
-            }
+            _entryRegion.SetOptions(Config.AvailableRegions, ConnectionArgs.PreferredRegion,
+                s => string.IsNullOrEmpty(s) ? "Best" : s);
 
-            _uiMaxPlayers.SetTextWithoutNotify(Math.Clamp(ConnectionArgs.MaxPlayerCount, 1, Config.MaxPlayerCount).ToString());
+            _entryAppVersion.SetOptions(_appVersions, ConnectionArgs.AppVersion,
+                s => s == Application.version ? $"Build {Application.version}" : s);
+
+            _entryFramerate.SetOptions(_graphicsSettings.CreateFramerateOptions,
+                _graphicsSettings.Framerate, s => s == -1 ? "Default" : s.ToString());
+
+            _entryResolution.SetOptions(_graphicsSettings.CreateResolutionOptions,
+                _graphicsSettings.Resolution, i =>
+#if UNITY_2022_2_OR_NEWER
+                    $"{Screen.resolutions[i].width} x {Screen.resolutions[i].height} @ {Mathf.RoundToInt((float)Screen.resolutions[i].refreshRateRatio.value)}"
+#else
+                    Screen.resolutions[i].ToString()
+#endif
+            );
+
+            _entryGraphicsQuality.SetOptions(_graphicsSettings.CreateGraphicsQualityOptions,
+                _graphicsSettings.QualityLevel, i => QualitySettings.names[i]);
+
+            _uiFullscreen.isOn = _graphicsSettings.Fullscreen;
+            _uiVSyncCount.isOn = _graphicsSettings.VSync;
+
+            _uiMaxPlayers.SetTextWithoutNotify(
+                Math.Clamp(ConnectionArgs.MaxPlayerCount, 1, Config.MaxPlayerCount).ToString()
+            );
 
             MenuAudioBus.EnsureInit();
 
             if (_bgmSlider)
             {
-                _bgmSlider.minValue = 0f;
-                _bgmSlider.maxValue = 1f;
-                _bgmSlider.wholeNumbers = false;
                 _bgmSlider.SetValueWithoutNotify(MenuAudioBus.BGMVolume);
-                _bgmSlider.onValueChanged.RemoveListener(OnBGMChanged);
                 _bgmSlider.onValueChanged.AddListener(OnBGMChanged);
             }
 
             if (_sfxSlider)
             {
-                _sfxSlider.minValue = 0f;
-                _sfxSlider.maxValue = 1f;
-                _sfxSlider.wholeNumbers = false;
                 _sfxSlider.SetValueWithoutNotify(MenuAudioBus.SFXVolume);
-                _sfxSlider.onValueChanged.RemoveListener(OnSFXChanged);
                 _sfxSlider.onValueChanged.AddListener(OnSFXChanged);
             }
 
@@ -177,19 +171,21 @@ namespace Quantum.Menu
         public override void Hide()
         {
             base.Hide();
+
             if (_bgmSlider) _bgmSlider.onValueChanged.RemoveListener(OnBGMChanged);
             if (_sfxSlider) _sfxSlider.onValueChanged.RemoveListener(OnSFXChanged);
+
             HideUser();
         }
 
         protected virtual void SaveChanges()
         {
-            if (IsShowing == false) return;
+            if (!IsShowing)
+                return;
 
-            if (Int32.TryParse(_uiMaxPlayers.text, out var maxPlayers))
+            if (Int32.TryParse(_uiMaxPlayers.text, out var max))
             {
-                ConnectionArgs.MaxPlayerCount = Math.Clamp(maxPlayers, 1, Config.MaxPlayerCount);
-                _uiMaxPlayers.SetTextWithoutNotify(ConnectionArgs.MaxPlayerCount.ToString());
+                ConnectionArgs.MaxPlayerCount = Math.Clamp(max, 1, Config.MaxPlayerCount);
             }
 
             if (_lockAndHide)
@@ -219,42 +215,45 @@ namespace Quantum.Menu
             Controller.Show<QuantumMenuUIMain>();
         }
 
-        void ApplyLockedDefaults()
+        private void ApplyLockedDefaults()
         {
-            if (!string.IsNullOrEmpty(Config.MachineId))
-                ConnectionArgs.AppVersion = Config.MachineId;
-            else if (Config.AvailableAppVersions != null && Config.AvailableAppVersions.Count > 0)
-                ConnectionArgs.AppVersion = Config.AvailableAppVersions[Config.AvailableAppVersions.Count - 1];
-            else
-                ConnectionArgs.AppVersion = Application.version;
+            // SAFE cross-platform version
+            ConnectionArgs.AppVersion = Application.version;
 
-            ConnectionArgs.PreferredRegion = string.IsNullOrEmpty(_defaultRegion) ? "asia" : _defaultRegion;
+            // Region
+            ConnectionArgs.PreferredRegion =
+                string.IsNullOrEmpty(_defaultRegion) ? "asia" : _defaultRegion;
 
+            // Graphics defaults
             QualitySettings.vSyncCount = _defaultVSync ? 1 : 0;
             Application.targetFrameRate = _defaultTargetFps;
 
-            int qualityIndex = 0;
+            int qIndex = 0;
             var names = QualitySettings.names;
-            if (names != null && names.Length > 0)
+            if (names != null)
             {
                 for (int i = 0; i < names.Length; i++)
                 {
-                    if (string.Equals(names[i], _defaultQualityName, StringComparison.OrdinalIgnoreCase))
-                    { qualityIndex = i; break; }
+                    if (names[i].Equals(_defaultQualityName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        qIndex = i;
+                        break;
+                    }
                 }
             }
+
             _graphicsSettings = _graphicsSettings ?? new QuantumMenuGraphicsSettings();
             _graphicsSettings.Fullscreen = false;
             _graphicsSettings.Framerate = _defaultTargetFps;
             _graphicsSettings.Resolution = 0;
-            _graphicsSettings.QualityLevel = qualityIndex;
+            _graphicsSettings.QualityLevel = qIndex;
             _graphicsSettings.VSync = _defaultVSync;
             _graphicsSettings.Apply();
 
             ConnectionArgs.SaveToPlayerPrefs();
         }
 
-        void OnBGMChanged(float v) => MenuAudioBus.BGMVolume = v;
-        void OnSFXChanged(float v) => MenuAudioBus.SFXVolume = v;
+        private void OnBGMChanged(float v) => MenuAudioBus.BGMVolume = v;
+        private void OnSFXChanged(float v) => MenuAudioBus.SFXVolume = v;
     }
 }

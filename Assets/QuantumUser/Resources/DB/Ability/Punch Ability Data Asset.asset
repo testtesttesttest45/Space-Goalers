@@ -23,7 +23,7 @@ MonoBehaviour:
   Duration:
     RawValue: 16384
   Cooldown:
-    RawValue: 262144
+    RawValue: 131072
   AvailabilityType: 2
   CastDirectionType: -1
   FaceCastDirection: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
   AttackShape:
     ShapeType: 1
     SphereRadius:
-      RawValue: 131072
+      RawValue: 163840
     CapsuleRadius:
       RawValue: 32768
     CapsuleHeight:
