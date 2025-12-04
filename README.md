@@ -59,7 +59,7 @@ Aside from just passing the Objective Ball around, players can equip and use var
 
 Youtube Demo: https://www.youtube.com/watch?v=baRT5PIPnN8 
 
-[[PREFERRED] Space Goalers v1.0.1 (Download for Android)](https://mega.nz/file/HkBiXZpb#P_cNLQtyw3-hdjQqv-AWGNleZMMHHLsmHQhQuZM3Y4E)
+[[PREFERRED] Space Goalers v1.1.0 (Download for Android)](https://mega.nz/file/ztpw2Izb#QsfMggesR3yU0jW3r5TyL5rep_DbyQNGX7G5zqQ-FOY)
 
 - Google Playstore and Apple App Store copies are also available. However they are not officially out to the public and only available to a small group of testers
 ---
